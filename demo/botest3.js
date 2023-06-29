@@ -10,6 +10,11 @@ const getCardString = function(id){
 };
 
 const changeTurn = function(){
+    for( let i=0; i<4; i++ ){
+        if( i===crTurn ) $('#list'+i).addClass('act');
+        else $('#list'+i).removeClass('act');
+    }
+
     if( crTurn === 0 ){ // is me
         $('#control').show();
     }else{
@@ -60,15 +65,14 @@ const chiabai = function(){
 };
 
 const playerBet = function(arr){
+    $('#control').hide();
+
     if( !arr || !arr.length ){ // bo bai
         players[crTurn].hb = true;
         if( crTurn === 0 ) $('#control').hide();
         const elm = $('#list'+crTurn);
 
         elm.addClass('bobai');
-        setTimeout(function(){
-            elm.removeClass('bobai');
-        },500);
 
         let countP = 0;
         players.forEach((player)=>{
@@ -76,6 +80,12 @@ const playerBet = function(arr){
         });
 
         if( countP < 2 ){ // new round
+            setTimeout(()=>{
+                for( let i=0; i<players.length; i++ ){
+                    $('#list'+i).removeClass('bobai');
+                }
+            }, 1500);
+
             players.forEach((player, index)=>{
                 if( !player.hb ) crTurn = index;
                 player.hb = false;
@@ -92,7 +102,9 @@ const playerBet = function(arr){
             }
         }
 
-        playerBetCallBack();
+        setTimeout(function(){
+            changeTurn();
+        }, 2000);
         return;
     }
 
@@ -115,6 +127,9 @@ const playerBet = function(arr){
                 $(this).addClass('act').delay(500).animate({width: 'toggle'});
             }
         });
+        setTimeout(function(){
+            renderTable();
+        }, 900);
     }else{
         let pos = $('#list'+crTurn).position();
         $('<img class="card-anim" src="./img/card/00.png"/>')
@@ -125,16 +140,11 @@ const playerBet = function(arr){
         .appendTo('#khung').animate({
             top: '40%',
             left: '50%'
+        }, 400, function(){
+            $('.card-anim').remove();
+            renderTable();
         });
-
-        renderTable();
     }
-
-    $('#control').hide();
-
-    setTimeout(()=>{
-        playerBetCallBack();
-    }, crTurn === 0? 1000:500);
 
     let arrS = [0,1,2,3,0,1,2,3];
     let crS = arrS.indexOf(crTurn);
@@ -144,41 +154,31 @@ const playerBet = function(arr){
             break;
         }
     }
-};
 
-const playerBetCallBack = function(){
-    $('.card-anim').remove();
-    renderTable();
-    // check win, neu có người hết bài
-    if( players.some( player=> player.cs.length === 0)){
-        setTimeout(()=>{
-            showMessage('Kết thúc');
-            renderTable(true);
-        }, 500);
-        endGame = true;
-        return;
-    }
-
-    if( crTurn === 0 ){
-        $('#control').show();
-    }else{
-        $('#control').hide();
-    }
-
-    setTimeout(function(){
-        changeTurn();
-    }, 2000);
+    setTimeout(()=>{
+        if( players.some( player=> player.cs.length === 0)){
+            setTimeout(()=>{
+                showMessage('Kết thúc');
+                renderTable(true);
+            }, 500);
+            endGame = true;
+        }else{
+            changeTurn();
+        }
+    }, crTurn === 0? 2300:2000);
 };
 
 const renderTable = function(showAll){
-    $('.cardlist').removeClass('act');
-    $('#list'+crTurn).addClass('act');
-
     players.forEach((player, index)=>{
         let s = '';
         if( index === 0 ){ // is me, show card
+            let nhacs = [];
+            $('#list0 img').each(function(){
+                if( $(this).position().top < -5 ) nhacs.push( parseInt($(this).attr('data-cid')) );
+            });
+
             for(let i=0; i<players[index].cs.length; i++){
-                s += '<img data-cid="'+ players[index].cs[i] +'" src="./img/card/'+ getCardString(players[index].cs[i]) +'.png">';
+                s += '<img data-cid="'+ players[index].cs[i] +'" src="./img/card/'+ getCardString(players[index].cs[i]) +'.png" class="'+ (nhacs.indexOf(players[index].cs[i]) !== -1?'act':'') +'">';
             }    
         }else if( showAll ){
             for(let i=0; i<players[index].cs.length; i++){
@@ -187,7 +187,6 @@ const renderTable = function(showAll){
         }else if( players[index].cs.length ){
             s = '<img src="./img/card/00.png"/><span>'+ players[index].cs.length +'</span>';
         }
-
         $('#list'+index).html(s);
     });
 
@@ -200,7 +199,7 @@ const renderTable = function(showAll){
         $('#list-tb').html(s5);
     }, 300);
 
-    $('#list0 img').on('click', function(){
+    $('#list0 img').off('click').on('click', function(){
         $(this).toggleClass('act');
         return false;
     });

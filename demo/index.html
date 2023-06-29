@@ -140,6 +140,10 @@
 		</div>
 		<p id="message"></p>
 	</div>
-	<script src="botest3.js?v=hgfhfgh"></script>
+	<script type="text/javascript">
+		var script = document.createElement('script');
+		script.src = "botest3.js?v="+new Date().getTime();
+		document.head.appendChild(script); //or something of the likes
+	</script>
 </body> 
 </html>
