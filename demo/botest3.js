@@ -3,12 +3,6 @@ let mainCards = [];
 let crTurn = 1;
 let endGame = false;
 
-const getCardString = function(id){
-    let chats = ['s','c','d','h'];
-    let ranks = ['3','4','5','6','7','8','9','T','J','Q','K','A','2'];
-    return ranks[ Math.floor(id/4) ] + chats[id%4];
-};
-
 const changeTurn = function(){
     for( let i=0; i<4; i++ ){
         if( i===crTurn ) $('#list'+i).addClass('act');
@@ -178,11 +172,11 @@ const renderTable = function(showAll){
             });
 
             for(let i=0; i<players[index].cs.length; i++){
-                s += '<img data-cid="'+ players[index].cs[i] +'" src="./img/card/'+ getCardString(players[index].cs[i]) +'.png" class="'+ (nhacs.indexOf(players[index].cs[i]) !== -1?'act':'') +'">';
+                s += '<img data-cid="'+ players[index].cs[i] +'" src="./img/card/'+ players[index].cs[i] +'.png" class="'+ (nhacs.indexOf(players[index].cs[i]) !== -1?'act':'') +'">';
             }    
         }else if( showAll ){
             for(let i=0; i<players[index].cs.length; i++){
-                s += '<img data-cid="'+ players[index].cs[i] +'" src="./img/card/'+ getCardString(players[index].cs[i]) +'.png">';
+                s += '<img data-cid="'+ players[index].cs[i] +'" src="./img/card/'+ players[index].cs[i] +'.png">';
             }
         }else if( players[index].cs.length ){
             s = '<img src="./img/card/00.png"/><span>'+ players[index].cs.length +'</span>';
@@ -192,7 +186,7 @@ const renderTable = function(showAll){
 
     let s5 = '';
     for(let i=0; i<mainCards.length; i++){
-        s5 += '<img src="./img/card/'+ getCardString(mainCards[i]) +'.png">';
+        s5 += '<img src="./img/card/'+ mainCards[i] +'.png">';
     }
 
     setTimeout(()=>{
@@ -256,9 +250,6 @@ $(function(){
             showMessage('Chưa chọn bài');
             return false;
         }
-
-        // vì là người thật đánh, cần kiểm tra bộ bài này là hợp lệ để đánh/chặn ( player sở hữu bộ bài này và là 1 bộ(không thừa) có thể chặn bài trên bàn )
-        console.log('người thật đánh, cần kiểm tra bộ bài đánh là hợp lệ trước', cards);
         showMessage('người thật đánh, cần kiểm tra bộ bài đánh là hợp lệ trước');
         // add code
         //
