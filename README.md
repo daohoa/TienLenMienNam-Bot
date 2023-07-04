@@ -17,7 +17,7 @@ Content-Type: application/json
   - cs `Array` `*` : bộ bài trên tay
   - hb `Int`: vòng này còn đánh hay đã bỏ bài, đã bỏ bài thì hb = 1, mặc định hb = 0
   - ir `Int`: nếu đây là người chơi thật thì khi thêm ir = 1 sẽ tăng độ khó cho game, bot sẽ ưu tiên chú ý player này
-- ct `Number` `*`: vị trí của bot phiên hiện tại ở trong ps trên, vị trí đầu tiên là 0
+- ct `Int` `*`: vị trí của bot phiên hiện tại ở trong ps trên, vị trí đầu tiên là 0
 - mc `Array`: bộ bài trên bàn cần phải chặn, nếu vòng mới thì không cần, mặc định là rỗng
 - if `Int`: ván đầu tiên của bàn, cần phải đánh 3 Bích trước thì đặt if là 1, còn không thì không cần, mặc định là 0
 
