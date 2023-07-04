@@ -61,7 +61,7 @@ Mã lỗi:
 ```
 
 # Lưu ý :
-- API đang được phát triển để nâng cấp khả năng của Bot nên sau này sẽ có những sửa đổi về cấu trúc API, các bạn cần lưu ý khi sử dụng.
+- API đang được phát triển để nâng cấp khả năng của Bot nên sẽ được cập nhật thường xuyên.
 - Nếu có bất kỳ câu hỏi cũng như đóng góp nào, vui lòng liên hệ với chúng tôi
 
 # API cũng cấp miễn phí. Chúng tôi không chịu trách nhiệm cho mục đích sử dụng của người dùng
