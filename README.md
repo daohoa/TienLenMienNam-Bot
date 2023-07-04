@@ -15,11 +15,11 @@ Content-Type: application/json
   
   Mỗi người chơi là 1 `Object` bao gồm:
   - cs `Array` `*` : bộ bài trên tay
-  - hb `Int`: vòng này còn đánh hay đã bỏ bài, đã bỏ bài thì hb = 1, mặc định hb = 0
-  - ir `Int`: nếu đây là người chơi thật thì khi thêm ir = 1 sẽ tăng độ khó cho game, bot sẽ ưu tiên chú ý player này
+  - hb `Int`: vòng này còn đánh hay đã bỏ bài, đã bỏ bài thì hb = 1, mặc định không có
+  - ir `Int`: nếu đây là người chơi thật thì khi thêm ir = 1 sẽ tăng độ khó cho game, bot sẽ ưu tiên chú ý player này, mặc định không có
 - ct `Int` `*`: vị trí của bot phiên hiện tại ở trong ps trên, vị trí đầu tiên là 0
-- mc `Array`: bộ bài trên bàn cần phải chặn, nếu vòng mới thì không cần, mặc định là rỗng
-- if `Int`: ván đầu tiên của bàn, cần phải đánh 3 Bích trước thì đặt if là 1, còn không thì không cần, mặc định là 0
+- mc `Array`: bộ bài trên bàn cần phải chặn, vòng mới và mặc định là không có
+- if `Int`: ván đầu tiên của bàn, cần phải đánh 3 Bích trước thì đặt if là 1, mặc định không có
 
 <sub>Chú thích: 
   `*` trường bắt buộc phải có
@@ -45,7 +45,7 @@ Content-Type: application/json
 50 = 2 rô
 51 = 2 cơ
 ```
-Ví dụ gửi request có data là
+Ví dụ data gửi
 ```
 {"ps":[{"cs":[16,19,38,51],"ir":1},{"cs":[5,18,48],"hb":1},{"cs":[1,8,10,11,17,21,23,25,28,30,40]}],"ct":2,"mc":[2,6,9]}
 ```
